@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Najot Ta'lim</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.1.0/mdb.min.css" rel="stylesheet"/>
+    {% load static %}
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'images/favicon.png' %}" rel="icon">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand me-2" href="{% url 'index' %}">
+      <img
+        src="{% static 'images/logo.png' %}"
+        height="50"
+        alt="Najot Ta'lim Logo"
+        loading="lazy"
+        style="margin-top: -1px;"
+      />
+      Najot Ta'lim
+    </a>
+
+    <button
+      data-mdb-collapse-init
+      class="navbar-toggler"
+      type="button"
+      data-mdb-target="#navbarButtonsExample"
+      aria-controls="navbarButtonsExample"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarButtonsExample">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'index' %}">Asosiy Menyu</a>
+        </li>
+      </ul>
+
+      <div class="d-flex align-items-center">
+        <button data-mdb-ripple-init type="button" class="btn btn-link px-3 me-2">
+          Kirish
+        </button>
+        <button data-mdb-ripple-init type="button" class="btn btn-primary me-3">
+          Ro'yxatdan o'tish
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- Navbar -->
+
+<!-- Courses Section -->
+<div class="container my-5">
+  {% if courses %}
+    <h2 class="text-center mb-4">Kurslarimiz</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for course in courses %}
+        <div class="col">
+          <div class="card h-100 shadow-sm border-light">
+            <div class="card-body">
+              <h5 class="card-title">{{ course.title }}</h5>
+              <p class="card-text">{{ course.description|truncatewords:20 }}</p>
+            </div>
+            <div class="card-footer text-muted text-center">
+              <a href="{% url 'course_detail' course.id %}" class="btn btn-primary w-100">Kursga o'tish</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <h2 class="text-center mb-4">Hozirda kurslar mavjud emas.</h2>
+  {% endif %}
+</div>
+
+<!-- Students Section -->
+<div class="container my-5">
+  {% if students %}
+    <h2 class="text-center mb-4">Talabalarimiz</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for student in students %}
+        <div class="col">
+          <div class="card shadow-sm border-light">
+            <div class="card-body">
+              <h5 class="card-title">{{ student.name }}</h5>
+              <p class="card-text">{{ student.course.title }}</p>
+              <a href="{% url 'student_detail' student.id %}" class="btn btn-outline-primary w-100">
+                <i class="fas fa-info-circle"></i> Batafsil
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <h2 class="text-center mb-4">Hozirda talabalar mavjud emas.</h2>
+  {% endif %}
+</div>
+
+
+<!-- Footer -->
+<footer class="bg-light text-center py-4">
+  <div class="container">
+    <section class="mb-4">
+      <a class="btn btn-social btn-facebook" href="#" role="button"><i class="fab fa-facebook-f"></i></a>
+      <a class="btn btn-social btn-twitter" href="#" role="button"><i class="fab fa-twitter"></i></a>
+      <a class="btn btn-social btn-google" href="#" role="button"><i class="fab fa-google"></i></a>
+      <a class="btn btn-social btn-instagram" href="#" role="button"><i class="fab fa-instagram"></i></a>
+      <a class="btn btn-social btn-linkedin" href="#" role="button"><i class="fab fa-linkedin-in"></i></a>
+    </section>
+
+    <div class="text-muted">
+      © {{ current_year }} Najot Ta'lim. Barcha huquqlar himoyalangan.
+    </div>
+  </div>
+</footer>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.1.0/mdb.umd.min.js"></script>
+</body>
+</html>
